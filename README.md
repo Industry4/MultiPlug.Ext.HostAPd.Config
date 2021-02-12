@@ -1,2 +1,2 @@
 # MultiPlug.Ext.HostAPd.Config
-Configure an Raspberry Pi WiFi Access point using hostapd for Linux
+Configure an WiFi Access point using hostapd for Linux

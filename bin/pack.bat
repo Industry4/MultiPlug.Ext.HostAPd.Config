@@ -1,0 +1,1 @@
+nuget.exe pack Nuget/MultiPlug.Ext.HostAPd.Config.nuspec

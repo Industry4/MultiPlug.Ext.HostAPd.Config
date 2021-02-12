@@ -1,0 +1,38 @@
+﻿@model MultiPlug.Base.Http.EdgeApp
+@functions {
+    public string NavLocationIsHome()
+    {
+        return Model.Context.Paths.Current == Model.Context.Paths.Home ? "active" : string.Empty;
+    }
+
+    public string NavLocationIsAbout()
+    {
+        return Model.Context.Paths.Current == Model.Context.Paths.Home + "about/" ? "active" : string.Empty;
+    }
+}
+<div class="row-fluid">
+    <ul class="nav nav-tabs">
+        <li class="@NavLocationIsHome()"><a href="@Raw(Model.Context.Paths.Home)">Home</a></li>
+        <li class="@NavLocationIsAbout()"><a href="@Raw(Model.Context.Paths.Home)about/">About</a></li>
+    </ul>
+
+    <style>
+        button.restart {
+            float: right;
+            position: relative;
+            right: -21px;
+            line-height: 11px;
+        }
+    </style>
+
+    @if (Model.Extension.Model.RebootUserPrompt)
+    {
+        <form id="formrestart" action="@Raw(Model.Context.Paths.Home)actions/" method="post" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
+            <div class="alert alert-error">
+                <button form="formrestart" type="submit" name="action" value="restart" class="restart btn btn-red">Restart Now</button>
+                <strong>Reboot Required</strong> Changes have been made that require a system reboot to be applied.
+            </div>
+        </form>
+    }
+
+</div>

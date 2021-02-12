@@ -1,0 +1,125 @@
+﻿@model MultiPlug.Base.Http.EdgeApp
+
+<section class="row-fluid">
+
+    <div class="row-fluid">
+        <div class="box">
+            <div class="span2">
+            </div>
+            <div class="span8">
+                <p style="font-size:26px; line-height: 54px; text-align: center; margin: 0px;">HostAPd Configuration</p>
+            </div>
+
+            <div class="span2" style="text-align: right;">
+                <button form="formsave" type="submit" value="submit" style="height:54px; width:65px" class="item btn btn-green"><i class="icon-save icon-large"></i><p>Save</p></button>
+            </div>
+        </div>
+    </div>
+
+    @Include("MultiPlug.Ext.HostAPd.Config.HostAPdConfig_Settings_Navigation")
+    <form id="formsave" action="" method="post" accept-charset="utf-8" enctype="application/x-www-form-urlencoded">
+        <div class="row-fluid">
+            <div class="span12">
+                <h3 class="box-header">Basic</h3>
+                <div class="box">
+                    <div class="row-fluid">
+                        <div class="span2"><b>Enabled</b></div>
+                        <div class="span7"><span class="help-block">Enable the service from startup or now</span></div>
+                        <div class="span3"><input type="checkbox" name="HostAPdEnabled" value="true" @Raw(Model.Extension.Model.HostAPdEnabled ? "checked=checked" : "")></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>SSID</b></div>
+                        <div class="span7"><span class="help-block">SSID to be used in IEEE 802.11 management frames</span></div>
+                        <div class="span3"><input name="SSID" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.SSID)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>Synchronise SSID</b></div>
+                        <div class="span7"><span class="help-block">Synchronises SSID with the devices hostname on startup or now.</span></div>
+                        <div class="span3"><input type="checkbox" name="SSIDSync" value="true" @Raw(Model.Extension.Model.SSIDSync ? "checked=checked" : "")></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>WPA PSK</b></div>
+                        <div class="span7"><span class="help-block">WPA pre-shared keys for WPA-PSK. This can be either entered as a 256-bit secret in hex format (64 hex digits), wpa_psk...</span></div>
+                        <div class="span3"><input name="WPAPSK" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.WPAPSK)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>WPA Passphrase</b></div>
+                        <div class="span7"><span class="help-block">...or as an ASCII passphrase (8..63 characters) that will be converted to PSK. This conversion uses SSID so the PSK changes when ASCII passphrase is used and the SSID is changed.</span></div>
+                        <div class="span3"><input name="WPAPassphrase" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.WPAPassphrase)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <h3 class="box-header">Security</h3>
+                <div class="box">
+                    <div class="row-fluid">
+                        <div class="span2"><b>WPA</b></div>
+                        <div class="span7"><span class="help-block">Setting this configures the AP to require WPA (either WPA-PSK or WPA-RADIUS/EAP based on other configuration). For WPA-PSK, either wpa_psk or wpa_passphrase must be set and wpa_key_mgmt must include WPA-PSK. Instead of wpa_psk / wpa_passphrase, wpa_psk_radius might suffice. For WPA-RADIUS/EAP, ieee8021x must be set (but without dynamic WEP keys), RADIUS authentication server must be configured, and WPA-EAP must be included in wpa_key_mgmt. This field is a bit field that can be used to enable WPA (IEEE 802.11i/D3.0) and/or WPA2 (full IEEE 802.11i/RSN): bit0 = WPA, bit1 = IEEE 802.11i/RSN (WPA2). Note that WPA3 is also configured with bit1 since it uses RSN just like WPA2. In other words, for WPA3, wpa=2 is used the configuration (and wpa_key_mgmt=SAE for WPA3-Personal instead of wpa_key_mgmt=WPA-PSK).</span></div>
+                        <div class="span3"><input name="WPA" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.WPA)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>WPA Pairwise</b></div>
+                        <div class="span7"><span class="help-block">Pairwise cipher for WPA (v1) (default: TKIP)</span></div>
+                        <div class="span3"><input name="WPAPairwise" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.WPAPairwise)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>WPA Key Management</b></div>
+                        <div class="span7"><span class="help-block">Set of accepted key management algorithms (WPA-PSK, WPA-EAP, or both). The entries are separated with a space. WPA-PSK-SHA256 and WPA-EAP-SHA256 can be added to enable SHA256-based stronger algorithms. WPA-PSK = WPA-Personal / WPA2-Personal. WPA-PSK-SHA256 = WPA2-Personal using SHA256. WPA-EAP = WPA-Enterprise / WPA2-Enterprise. WPA-EAP-SHA256 = WPA2-Enterprise using SHA256. SAE = SAE (WPA3-Personal). WPA-EAP-SUITE-B-192 = WPA3-Enterprise with 192-bit security/CNSA suite. FT-PSK = FT with passphrase/PSK. FT-EAP = FT with EAP. FT-EAP-SHA384 = FT with EAP using SHA384. FT-SAE = FT with SAE. FILS-SHA256 = Fast Initial Link Setup with SHA256. FILS-SHA384 = Fast Initial Link Setup with SHA384. FT-FILS-SHA256 = FT and Fast Initial Link Setup with SHA256. FT-FILS-SHA384 = FT and Fast Initial Link Setup with SHA384. OWE = Opportunistic Wireless Encryption (a.k.a. Enhanced Open). DPP = Device Provisioning Protocol. OSEN = Hotspot 2.0 online signup with encryption.</span></div>
+                        <div class="span3"><input name="WPAKeyManagement" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.WPAKeyManagement)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <h3 class="box-header">Advance</h3>
+                <div class="box">
+                    <div class="row-fluid">
+                        <div class="span2"><b>Interface</b></div>
+                        <div class="span7"><span class="help-block">AP netdevice name (without 'ap' postfix, i.e., wlan0 uses wlan0ap for management frames with the Host AP driver); wlan0 with many nl80211 drivers"</span></div>
+                        <div class="span3"><input name="Interface" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.Interface)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>Hardware Mode</b></div>
+                        <div class="span7"><span class="help-block">Operation mode (a = IEEE 802.11a (5 GHz), b = IEEE 802.11b (2.4 GHz), g = IEEE 802.11g (2.4 GHz), ad = IEEE 802.11ad (60 GHz); a/g options are used with IEEE 802.11n (HT), too, to specify band). For IEEE 802.11ac (VHT), this needs to be set to hw_mode=a. For IEEE 802.11ax (HE) on 6 GHz this needs to be set to hw_mode=a. When using ACS (see channel parameter), a special value "any" can be used to indicate that any support band can be used. This special case is currently supported only with drivers with which offloaded ACS is used. Default: IEEE 802.11b"</span></div>
+                        <div class="span3"> <input name="HWMode" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.HWMode)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>Channel</b></div>
+                        <div class="span7"><span class="help-block">Channel number (IEEE 802.11) (default: 0, i.e., not set) Some drivers do not use this value from hostapd and the channel will need to be configured separately with iwconfig. If CONFIG_ACS build option is enabled, the channel can be selected automatically at run time by setting channel=acs_survey or channel=0, both of which will enable the ACS survey based algorithm.</span></div>
+                        <div class="span3"><input name="Channel" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.Channel)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>Wi-Fi Multimedia Enabled</b></div>
+                        <div class="span7"><span class="help-block"></span></div>
+                        <div class="span3"><input name="WmmEnabled" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.WmmEnabled)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>MAC Address Authentication</b></div>
+                        <div class="span7"><span class="help-block">Station MAC address-based authentication. Please note that this kind of access control requires a driver that uses hostapd to take care of management frame processing and as such, this can be used with driver=hostap or driver=nl80211, but not with driver=atheros.. 0 = accept unless in deny list. 1 = deny unless in accept list. 2 = use external RADIUS server (accept/deny lists are searched first).</span></div>
+                        <div class="span3"><input name="MACAddressAcl" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.MACAddressAcl)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>Authentication Algorithms</b></div>
+                        <div class="span7"><span class="help-block">IEEE 802.11 specifies two authentication algorithms. hostapd can be configured to allow both of these or only one. Open system authentication should be used with IEEE 802.1X. Bit fields of allowed authentication algorithms: bit 0 = Open System Authentication. bit 1 = Shared Key Authentication (requires WEP).</span></div>
+                        <div class="span3"><input name="AuthAlgs" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.AuthAlgs)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>Ignore Broadcast SSID</b></div>
+                        <div class="span7"><span class="help-block">Send empty SSID in beacons and ignore probe request frames that do not specify full SSID, i.e., require stations to know SSID. default: disabled (0). 1 = send empty (length=0) SSID in beacon and ignore probe request for broadcast SSID. 2 = clear SSID (ASCII 0), but keep the original length (this may be required with some clients that do not support empty SSID) and ignore probe requests for broadcast SSID.</span></div>
+                        <div class="span3"><input name="IgnoreBroadcastSSID" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.IgnoreBroadcastSSID)"></div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2"><b>RsnPairwise</b></div>
+                        <div class="span7"><span class="help-block">Pairwise cipher for RSN/WPA2 (default: use WPA Pairwise value)</span></div>
+                        <div class="span3"><input name="RsnPairwise" class="input-block-level" type="text" value="@Raw(Model.Extension.Model.RsnPairwise)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
